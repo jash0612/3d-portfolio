@@ -14,8 +14,13 @@ const Contact = () => {
     email: "",
     message: "",
   });
-  // console.log('env', process.env.REACT_APP_SERVICE_ID)
+
   const [loading, setLoading] = useState(false);
+  const serviceId = import.meta.env.VITE_SERVICE_ID;
+  const templateId = import.meta.env.VITE_TEMPLATE_ID;
+  const toName = import.meta.env.VITE_TO_NAME;
+  const toEmail = import.meta.env.VITE_EMAIL;
+  const emailJsUserId = import.meta.env.VITE_EMAILJS_USER_ID;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,16 +34,16 @@ const Contact = () => {
 
     emailjs
       .send(
-        "service_5e5iygr",
-        "portfolio_template",
+        serviceId,
+        templateId,
         {
           from_name: form.name,
-          to_name: "Jash Kabrawala",
+          to_name: toName,
           from_email: form.email,
-          to_email: "jash61294@gmail.com",
+          to_email: toEmail,
           message: form.message,
         },
-        "BrSFH1QANfxdmQfi-"
+        emailJsUserId
       )
       .then(
         () => {
@@ -56,7 +61,7 @@ const Contact = () => {
 
           console.log(error);
 
-          alert("Email sent successfully.");
+          alert("Error during sending email.");
         }
       );
   };
